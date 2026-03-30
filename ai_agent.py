@@ -35,6 +35,7 @@ def analyze_run(activity_data):
     prompt = f"""
 Je bent een professionele hardloopcoach. Ik heb zojuist een hardloopactiviteit afgerond op Strava (vanuit mijn Garmin).
 Analyseer mijn hardloopsessie en schrijf een motiverende e-mail in het Nederlands, met gebruik van Markdown-opmaak (gebruik headers, vetgedrukte tekst en lijstjes zodat dit makkelijk leesbaar is in een e-mail).
+Begin je e-mail altijd exact met de aanhef: "Beste Jeffrey,\n\n".
 
 Je MOET exact de volgende structuur en kopjes overnemen en invullen in je antwoord:
 1. **Wat je hebt gedaan**: (Geef een opsomming van: Afstand, duur, gemiddelde hartslag, gemiddelde tempo).
