@@ -73,7 +73,8 @@ Je MOET exact de volgende structuur en kopjes overnemen en invullen in je antwoo
         # 2. Geef de Assistent de opdracht om te lezen en te antwoorden
         run = client.beta.threads.runs.create_and_poll(
             thread_id=thread_id,
-            assistant_id=assistant_id
+            assistant_id=assistant_id,
+            max_prompt_tokens=15000
         )
 
         # 3. Haal het antwoord op als hij klaar is
