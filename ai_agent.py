@@ -23,6 +23,10 @@ def analyze_run(activity_data):
     tijd_minuten = activity_data.get('moving_time', 0) / 60
     tempo_weergave = format_tempo(activity_data.get('average_speed', 0))
     gem_hr = activity_data.get('average_heartrate', 'Onbekend')
+    cadans = activity_data.get('average_cadence', 'Onbekend')
+    if cadans != 'Onbekend':
+        cadans = cadans * 2 # Strava geeft vaak cadans per been
+    notities = activity_data.get('description', 'Geen notities ingevuld in Strava.')
 
     # Analyse per blok/interval/ronde opbouwen
     laps_info = ""
@@ -40,26 +44,34 @@ def analyze_run(activity_data):
         laps_info = "Er zijn geen gedetailleerde rondes/laps geregistreerd in Garmin/Strava voor deze activiteit."
 
     prompt = f"""
-Nieuwe hardloopactiviteit binnengekomen!
+Nieuwe hardloopactiviteit binnengekomen! Dit is DE IDEALE ANALYSE.
 
-Hier zijn de algemene sessiegegevens:
+Hier zijn de harde sessiegegevens uit Strava:
 - Titel: {activity_data.get('name', 'Onbekend')}
 - Afstand: {afstand_km:.2f} km
 - Tijd (bewegend): {tijd_minuten:.1f} minuten
 - Gemiddeld tempo (pace): {tempo_weergave}
 - Gemiddelde hartslag: {gem_hr} bpm
 - Maximale hartslag: {activity_data.get('max_heartrate', 'Geen data')} bpm
+- Cadans (spm): {cadans}
 - Hoogteverschillen: {activity_data.get('total_elevation_gain', 0)} meter
+- Notities/Gevoel (uit Strava beschrijving): {notities}
 
-Je MOET exact de volgende structuur en kopjes overnemen en invullen in je antwoord (gebruik Markdown):
-1. **Wat je hebt gedaan**: (Geef een opsomming van: Afstand, duur, gemiddelde hartslag, gemiddelde tempo).
-2. **Analyse per blok/interval/ronde**: {laps_info}
-3. **Vergelijking met het verleden**: (Kijk naar voorgaande actviteiten in je logs en trek een vergelijkende conclusie).
-4. **Wat ging er echt goed**: (Waar mag ik trots op zijn gebaseerd op de data?).
-5. **Wat zijn verbeterpunten**: (Kritische blik op bijvoorbeeld een te hoge hartslag, onregelmatig tempo, etc.).
-6. **Belangrijkste conclusie**: (Korte samenvatting van de hele sessie).
-7. **Eindoordeel**: (Geef een cijfer op een schaal van 1-10).
-8. **Advies voor de volgende training**: (Wat kan ik de volgende keer het beste doen?).
+Je MOET exact de volgende structuur en kopjes (inclusief emoticons) overnemen en invullen in je antwoord (gebruik Markdown):
+
+1️⃣ 📊 **Samenvatting (Kort en krachtig dashboard)**: Afstand, Tijd, Gemiddeld tempo, Gemiddelde HR, Max HR.
+2️⃣ ❤️ **Hartslag analyse**: Tijd in zones, verloop, opbouw en stabiliteit. Interpretatie: zat ik in de juiste zone? Was er cardiac drift?
+3️⃣ 🏃 **Tempo & pacing**: {laps_info}. Interpretatie: te snel gestart? Stabiel? Negatieve split?
+4️⃣ ⚙️ **Efficiëntie**: Tempo vs hartslag en Cadans integreren. Interpretatie: zelfde HR met sneller tempo = progressie?
+5️⃣ 🔥 **Trainingsbelasting**: Type training (herstel, duur, tempo, interval). Was dit de juiste prikkel? Te zwaar of licht?
+6️⃣ 🧠 **Gevoel vs data**: Baseer dit op de Notities: "{notities}". Als er geen notities zijn, geef dan aan waarom het noteren van het gevoel belangrijk is om context te snappen (vermoeidheid vs data).
+7️⃣ ⚠️ **Afwijkingen / bijzonderheden**: Hartslag meetfout, stoppen of verkeersmomenten?
+8️⃣ 📈 **Progressie check**: Vergelijk ALTIJD met de logboek geschiedenis in deze Thread (tempo vs HR, gevoel vs prestatie t.o.v. vorige runs).
+9️⃣ 🎯 **Advies volgende training (concreet uitvoerbaar)**: Duur (bijv 45 min), tempo range, hartslag range, focus (rustig/tempo/techniek).
+
+🔥 **BONUS**:
+📌 **1 Belangrijkste leerpunt** (Bijv: "Start rustiger om HR stabiel te houden")
+📌 **1 Focuspunt volgende run** (Bijv: "Blok 1 onder 145 bpm houden")
     """
     
     try:
