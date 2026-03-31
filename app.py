@@ -41,7 +41,8 @@ def handle_webhook():
         updates = data.get('updates', {})
         
         # We controleren of specifiek de titel óf de beschrijving/notities zojuist is bewerkt.
-        if 'title' in updates or 'description' in updates:
+        # Strava slingert soms 'title' of 'name' eruit, afhankelijk van hoe de webhook API de payload verstuurt.
+        if any(k in updates for k in ['title', 'name', 'description', 'notes']):
             activity_id = data.get('object_id')
             
             # Voorkom dat Render dubbele e-mails stuurt als je snel achter elkaar de titel en daarna de notities aanpast.
@@ -57,7 +58,7 @@ def handle_webhook():
             else:
                 print(f"Activiteit {activity_id} was zojuist al verwerkt. Ik voorkom dubbele emails.")
         else:
-            print("Update negeren: het was geen wijziging in titel of notities.")
+            print(f"Update negeren: het was geen wijziging in titel of notities. (Gewijzigde velden: {list(updates.keys())})")
             
     elif data.get('aspect_type') == 'create':
         print("Create event genegeerd: We wachten tot de gebruiker een titel/doel invoert.")
