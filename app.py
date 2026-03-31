@@ -28,18 +28,39 @@ def verify_webhook():
         return 'Forbidden', 403
     return 'Invalid request', 400
 
+processed_activities = set()
+
 @app.route('/webhook', methods=['POST'])
 def handle_webhook():
     data = request.json
     print("Nieuw bericht van Strava binnen:", data)
     
-    # We willen alleen luisteren als er een NIEUWE activiteit ('create') wordt aangemaakt.
-    if data.get('object_type') == 'activity' and data.get('aspect_type') == 'create':
-        activity_id = data.get('object_id')
+    # We luisteren bewust naar 'update' ipv 'create', 
+    # omdat de gebruiker eerst een doeltitel in Strava moet kunnen uittypen.
+    if data.get('object_type') == 'activity' and data.get('aspect_type') == 'update':
+        updates = data.get('updates', {})
         
-        # We processen de activiteit in de achtergrond, zodat Strava niet hoeft te wachten
-        # op de OpenAI analyse (Strava eist namelijk binnen 2 seconden een antwoord).
-        threading.Thread(target=process_activity, args=(activity_id,)).start()
+        # We controleren of specifiek de titel óf de beschrijving/notities zojuist is bewerkt.
+        if 'title' in updates or 'description' in updates:
+            activity_id = data.get('object_id')
+            
+            # Voorkom dat Render dubbele e-mails stuurt als je snel achter elkaar de titel en daarna de notities aanpast.
+            if activity_id not in processed_activities:
+                processed_activities.add(activity_id)
+                # Leeg het geheugen af en toe veiligheidshalve
+                if len(processed_activities) > 100:
+                    processed_activities.clear()
+                    processed_activities.add(activity_id)
+                
+                print(f"Trigger! Titel of beschrijving geüpdatet. Start met analasyeren van activiteit {activity_id}...")
+                threading.Thread(target=process_activity, args=(activity_id,)).start()
+            else:
+                print(f"Activiteit {activity_id} was zojuist al verwerkt. Ik voorkom dubbele emails.")
+        else:
+            print("Update negeren: het was geen wijziging in titel of notities.")
+            
+    elif data.get('aspect_type') == 'create':
+        print("Create event genegeerd: We wachten tot de gebruiker een titel/doel invoert.")
         
     return 'EVENT_RECEIVED', 200
 
