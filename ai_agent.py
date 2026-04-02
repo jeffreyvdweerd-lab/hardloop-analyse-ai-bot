@@ -59,19 +59,49 @@ Hier zijn de harde sessiegegevens uit Strava:
 
 Je MOET exact de volgende structuur en kopjes (inclusief emoticons) overnemen en invullen in je antwoord (gebruik Markdown):
 
+⭐ **Eindoordeel**
+Beoordeling training: [Cijfer]/10
+Type: [Bijv. Goede aerobe duurtraining]
+Opmerking: [Bijv. Hartslag iets aan de hoge kant door warmte, maar controle behouden]
+
 1️⃣ 📊 **Samenvatting (Kort en krachtig dashboard)**: Afstand, Tijd, Gemiddeld tempo, Gemiddelde HR, Max HR.
-2️⃣ ❤️ **Hartslag analyse**: Tijd in zones, verloop, opbouw en stabiliteit. Interpretatie: zat ik in de juiste zone? Was er cardiac drift?
-3️⃣ 🏃 **Tempo & pacing**: {laps_info}. Interpretatie: te snel gestart? Stabiel? Negatieve split?
-4️⃣ ⚙️ **Efficiëntie**: Tempo vs hartslag en Cadans integreren. Interpretatie: zelfde HR met sneller tempo = progressie?
-5️⃣ 🔥 **Trainingsbelasting**: Type training (herstel, duur, tempo, interval). Was dit de juiste prikkel? Te zwaar of licht?
+
+2️⃣ ❤️ **Hartslag analyse & 🎯 Zone oordeel**: 
+- Tijd in zones, verloop, opbouw en stabiliteit.
+👉 Doel zone: [inschatting obv type/notities, bijv. 140-150 bpm]
+👉 Werkelijke zone: [obv data, bijv. ±152 bpm gemiddeld]
+👉 Oordeel: [Bijv. licht te hoog, maar verklaarbaar door warmte]
+
+3️⃣ 🏃 **Tempo & pacing**: 
+{laps_info}
+- Interpretatie: te snel gestart? Stabiel? Negatieve split?
+
+4️⃣ 🧠 **"Juiste training?" check**: 
+✔️ Doel training: [Bijv. rustige duurloop]
+✔️ Uitvoering: [Bijv. grotendeels correct]
+⚠️ Afwijking: [Bijv. HR liep op door warmte]
+👉 Conclusie: [Bijv. training geslaagd, maar iets zwaarder dan bedoeld]
+
+5️⃣ ⚙️ **Efficiëntie**: Tempo vs hartslag en Cadans integreren. Interpretatie: zelfde HR met sneller tempo = progressie?
+
 6️⃣ 🧠 **Gevoel vs data**: Baseer dit op de Notities: "{notities}". Als er geen notities zijn, geef dan aan waarom het noteren van het gevoel belangrijk is om context te snappen (vermoeidheid vs data).
+
 7️⃣ ⚠️ **Afwijkingen / bijzonderheden**: Hartslag meetfout, stoppen of verkeersmomenten?
-8️⃣ 📈 **Progressie check**: Vergelijk ALTIJD met de logboek geschiedenis in deze Thread (tempo vs HR, gevoel vs prestatie t.o.v. vorige runs).
-9️⃣ 🎯 **Advies volgende training (concreet uitvoerbaar)**: Duur (bijv 45 min), tempo range, hartslag range, focus (rustig/tempo/techniek).
+
+8️⃣ 📈 **Echte Progressie check**: Vergelijk ALTIJD concreet met de logboek geschiedenis in deze Thread:
+👉 Vorige run: [Tempo] @ [HR]
+👉 Deze run: [Tempo] @ [HR]
+👉 Interpretatie: [Bijv. HR hoger door externe factoren (warmte), geen echte terugval. OF: Zelfde HR -> sneller tempo = progressie]
+
+9️⃣ 🎯 **Advies volgende training (Hartslag-leidend!)**: 
+- Eerste X min: [Bijv. <145 bpm]
+- Daarna: [Bijv. max 150 bpm]
+👉 Tempo volgt automatisch. (Geef géén uitsluitend tempo-gedreven adviezen meer, laat HR altijd leidend zijn!)
 
 🔥 **BONUS**:
-📌 **1 Belangrijkste leerpunt** (Bijv: "Start rustiger om HR stabiel te houden")
-📌 **1 Focuspunt volgende run** (Bijv: "Blok 1 onder 145 bpm houden")
+📌 **Belangrijk signaal**: [Bijv. Cardiac drift door warmte -> geen conditieprobleem]
+📌 **1 Belangrijkste leerpunt**: [Bijv. Start rustiger om HR stabiel te houden]
+📌 **1 Focuspunt volgende run**: [Bijv. Blok 1 onder 145 bpm houden]
     """
     
     try:
